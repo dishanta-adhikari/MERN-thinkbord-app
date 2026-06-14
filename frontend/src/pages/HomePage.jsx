@@ -17,6 +17,7 @@ const HomePage = () => {
         const res = await axios.get("http://localhost:5001/api/notes");
 
         console.log(res.data);
+
         setNotes(res.data);
         setIsRateLimited(false);
       } catch (error) {
@@ -37,20 +38,32 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-base-200">
       <Navbar />
+
       {isRateLimited && <RateLimitedUI />}
 
       <div className="max-w-7xl mx-auto p-4 mt-6">
         {loading && (
-          <div className="text-center text-primary p-10">Loading notes...</div>
+          <div className="flex justify-center items-center py-20">
+            <span className="loading loading-spinner loading-lg"></span>
+          </div>
         )}
 
-        {notes.length > 0 && !isRateLimited && (
+        {!loading && !isRateLimited && notes.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {notes.map((note) => (
               <NoteCard key={note._id} note={note} />
             ))}
+          </div>
+        )}
+
+        {!loading && !isRateLimited && notes.length === 0 && (
+          <div className="text-center py-20">
+            <h2 className="text-2xl font-bold mb-2">No Notes Found</h2>
+            <p className="text-base-content/70">
+              Create your first note to get started.
+            </p>
           </div>
         )}
       </div>
