@@ -5,6 +5,7 @@ import api from "../lib/axios.js";
 import Navbar from "../components/Navbar.jsx";
 import RateLimitedUI from "../components/RateLimitedUI.jsx";
 import NoteCard from "../components/NoteCard.jsx";
+import NotesNotFound from "../components/NotesNotFound.jsx";
 
 const HomePage = () => {
   const [isRateLimited, setIsRateLimited] = useState(false);
@@ -50,22 +51,24 @@ const HomePage = () => {
           </div>
         )}
 
+        {notes.length === 0 && !isRateLimited && <NotesNotFound />}
+
         {!loading && !isRateLimited && notes.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {notes.map((note) => (
-              <NoteCard key={note._id} note={note} />
+              <NoteCard key={note._id} note={note} setNotes={setNotes} />
             ))}
           </div>
         )}
 
-        {!loading && !isRateLimited && notes.length === 0 && (
+        {/* {!loading && !isRateLimited && notes.length === 0 && (
           <div className="text-center py-20">
             <h2 className="text-2xl font-bold mb-2">No Notes Found</h2>
             <p className="text-base-content/70">
               Create your first note to get started.
             </p>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );
