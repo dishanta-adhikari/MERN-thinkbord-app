@@ -9,17 +9,19 @@ import api from "../lib/axios.js";
 export const NoteCard = ({ note, setNotes }) => {
   // delete note function
   const handleDelete = async (e, id) => {
-    e.preventDefault(); // get rid of navigation behaviour
+    e.preventDefault();
 
-    if (!window.confirm("Are you sure you want to delete this note?"));
+    if (!window.confirm("Are you sure you want to delete this note?")) {
+      return;
+    }
 
     try {
       await api.delete(`/notes/${id}`);
       setNotes((prev) => prev.filter((note) => note._id !== id));
-      toast.success("Note deleted succesfully");
+      toast.success("Note deleted successfully");
     } catch (error) {
-      console.log("Error in handleDelete, error");
-      toast.error("failed to delete note");
+      console.log("Error in handleDelete", error);
+      toast.error("Failed to delete note");
     }
   };
 
