@@ -1,22 +1,33 @@
 import mongoose from "mongoose";
 
-// 1 - create a schema
-// 2 - model based off that tschema
-
 const noteSchema = new mongoose.Schema(
     {
         title: {
             type: String,
-            required: true
+            required: true,
         },
+
         content: {
             type: String,
-            required: true
+            required: true,
+        },
+
+        color: {
+            type: String,
+            default: "blue",
+            enum: [
+                "pink",
+                "blue",
+                "green",
+                "yellow",
+                "purple",
+                "orange",
+            ],
         },
     },
-    { timestamps: true }
+    {
+        timestamps: true,
+    }
 );
 
-const Note = mongoose.model("Note", noteSchema);
-
-export default Note;
+export default mongoose.model("Note", noteSchema);
