@@ -3,11 +3,13 @@ import { Link, useNavigate, useParams } from "react-router";
 import toast from "react-hot-toast";
 import { ArrowLeftIcon, LoaderIcon, Trash2Icon } from "lucide-react";
 import api from "../lib/axios";
+import { NOTE_COLORS, COLOR_BUTTONS, COLOR_CLASSES } from "../lib/noteColors";
 
 const NoteDetailPage = () => {
   const [note, setNote] = useState({
     title: "",
     content: "",
+    color: "blue",
   });
 
   const [loading, setLoading] = useState(true);
@@ -64,6 +66,7 @@ const NoteDetailPage = () => {
       await api.put(`/notes/${id}`, {
         title: note.title,
         content: note.content,
+        color: note.color,
       });
 
       toast.success("Note updated successfully");
@@ -86,6 +89,8 @@ const NoteDetailPage = () => {
     );
   }
 
+  const borderColor = COLOR_CLASSES[note.color] || COLOR_CLASSES.blue;
+
   return (
     <div className="min-h-screen bg-base-200">
       <div className="container mx-auto px-4 py-8 max-w-3xl">
@@ -107,7 +112,7 @@ const NoteDetailPage = () => {
         </div>
 
         {/* Form Card */}
-        <div className="card bg-base-100 shadow-xl">
+        <div className={`card bg-base-100 shadow-xl border-t-4 ${borderColor}`}>
           <div className="card-body">
             <form onSubmit={handleSubmit}>
               {/* Title */}
