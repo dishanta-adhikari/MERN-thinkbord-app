@@ -1,6 +1,4 @@
-# MEARN-thinkbord-app
-
-# Notes App
+# myThinkbord App
 
 A modern full-stack Notes Management Application built with **React, Node.js, Express, and MongoDB**. Users can create, edit, delete, and organize notes with customizable colors while enjoying a clean and responsive user experience.
 
